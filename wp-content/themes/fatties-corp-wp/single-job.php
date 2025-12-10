@@ -12,7 +12,7 @@ while (have_posts()):
   $location_terms = get_the_terms(get_the_ID(), 'job_location');
   $location = '';
   if (!empty($location_terms) && !is_wp_error($location_terms)) {
-    $location = implode('; ', wp_list_pluck($location_terms, 'name'));
+    $location = implode('/', wp_list_pluck($location_terms, 'name'));
   }
 
   $type_terms = get_the_terms(get_the_ID(), 'job_type');
