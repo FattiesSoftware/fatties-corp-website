@@ -77,6 +77,15 @@ get_header();
              <a href="https://twitter.com/intent/tweet?url=<?php the_permalink(); ?>&text=<?php the_title(); ?>" target="_blank" class="share-btn tw"><ion-icon name="logo-twitter"></ion-icon></a>
              <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?php the_permalink(); ?>" target="_blank" class="share-btn li"><ion-icon name="logo-linkedin"></ion-icon></a>
            </div>
+
+        </div>
+
+        <div class="single-comments">
+          <?php
+          if (comments_open() || get_comments_number()):
+            comments_template();
+          endif;
+          ?>
         </div>
 
       <?php endwhile; // End of the loop. ?>

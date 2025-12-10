@@ -1043,3 +1043,74 @@ function fatties_corp_save_job_meta_box($post_id)
 }
 
 add_action('save_post', 'fatties_corp_save_job_meta_box');
+
+// Reorder comment fields: Name/Email -> Comment -> Cookies
+function fatties_corp_reorder_comment_fields($fields)
+{
+  $comment_field = isset($fields['comment']) ? $fields['comment'] : null;
+  $cookies_field = isset($fields['cookies']) ? $fields['cookies'] : null;
+
+  // Remove them from their current positions
+  if ($comment_field)
+    unset($fields['comment']);
+  if ($cookies_field)
+    unset($fields['cookies']);
+
+  // Add them back at the end in the desired order
+  if ($comment_field)
+    $fields['comment'] = $comment_field;
+  if ($cookies_field)
+    $fields['cookies'] = $cookies_field;
+
+  return $fields;
+}
+
+add_filter('comment_form_fields', 'fatties_corp_reorder_comment_fields');
+
+// Custom Comment List Callback
+function fatties_corp_comment_list($comment, $args, $depth)
+{
+  ?>
+    <li id="comment-<?php comment_ID(); ?>" <?php comment_class(); ?>>
+        <article id="div-comment-<?php comment_ID(); ?>" class="comment-body">
+            <div class="comment-avatar">
+                <?php if ($args['avatar_size'] != 0) echo get_avatar($comment, $args['avatar_size']); ?>
+            </div>
+            
+            <div class="comment-main">
+                <header class="comment-meta">
+                    <div class="comment-author">
+                        <b class="fn"><?php echo get_comment_author_link(); ?></b>
+                    </div>
+                    <div class="comment-metadata">
+                        <a href="<?php echo esc_url(get_comment_link($comment->comment_ID)); ?>">
+                            <time datetime="<?php comment_time('c'); ?>">
+                                <?php printf(__('%1$s lúc %2$s', 'fatties-corp'), get_comment_date(), get_comment_time()); ?>
+                            </time>
+                        </a>
+                    </div>
+                    <?php if ($comment->comment_approved == '0'): ?>
+                        <div class="comment-awaiting-moderation">
+                            <em><?php _e('Bình luận của bạn đang chờ kiểm duyệt.', 'fatties-corp'); ?></em>
+                        </div>
+                    <?php endif; ?>
+                </header>
+
+                <div class="comment-content">
+                    <?php comment_text(); ?>
+                </div>
+
+                <div class="comment-reply">
+                    <?php comment_reply_link(array_merge($args, array(
+                      'add_below' => 'div-comment',
+                      'depth' => $depth,
+                      'max_depth' => $args['max_depth'],
+                      'before' => '',
+                      'after' => ''
+                    ))); ?>
+                </div>
+            </div>
+        </article>
+    <!-- </li> is closed by WP -->
+    <?php
+}
