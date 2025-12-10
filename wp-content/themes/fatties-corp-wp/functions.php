@@ -864,3 +864,28 @@ function fatties_corp_reading_time()
   $reading_time = ceil($word_count / 250);
   return $reading_time < 1 ? 1 : $reading_time;
 }
+
+// Custom Login Page Style
+function fatties_corp_login_style()
+{
+  wp_enqueue_style('fatties-corp-login', get_template_directory_uri() . '/assets/css/login.css');
+  wp_enqueue_style('fatties-corp-fonts', 'https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap', array(), null);
+}
+
+add_action('login_enqueue_scripts', 'fatties_corp_login_style');
+
+// Change Login Logo URL
+function fatties_corp_login_logo_url()
+{
+  return home_url();
+}
+
+add_filter('login_headerurl', 'fatties_corp_login_logo_url');
+
+// Change Login Logo Title
+function fatties_corp_login_logo_url_title()
+{
+  return get_bloginfo('name');
+}
+
+add_filter('login_headertext', 'fatties_corp_login_logo_url_title');
