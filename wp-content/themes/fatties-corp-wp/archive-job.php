@@ -9,7 +9,7 @@ get_header();
     <header class="page-header" style="text-align: center; margin-bottom: 60px;">
       <h1 class="page-title main-title" data-aos="fade-up">Cơ hội nghề nghiệp</h1>
       <div class="secondary-text w750 mg-center" data-aos="fade-up" data-aos-delay="100">
-        Hãy gia nhập đội ngũ Fatties Software để cùng nhau xây dựng những sản phẩm công nghệ tuyệt vời.
+        Hãy gia nhập đội ngũ Fatties Corporation để cùng nhau xây dựng những sản phẩm công nghệ tuyệt vời.
       </div>
     </header>
 
