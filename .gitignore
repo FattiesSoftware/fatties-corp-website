@@ -77,7 +77,5 @@ build/
 # ===========================
 # Ignore system-wide .DS_Store recursively
 **/.DS_Store
-wp-content/.DS_Store
-/wp-content/uploads/wpforms/cache
-/wp-content/uploads
-wp-content/*
+# Bỏ qua thư mục wp-content
+wp-content/
