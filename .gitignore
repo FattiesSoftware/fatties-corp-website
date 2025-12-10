@@ -79,3 +79,6 @@ build/
 **/.DS_Store
 # Bỏ qua thư mục wp-content
 wp-content/
+
+# Cho phép thư mục theme
+!wp-content/themes/fatties-corp-wp/
