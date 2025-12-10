@@ -10,7 +10,10 @@ while (have_posts()):
   $apply_email = get_post_meta(get_the_ID(), '_job_apply_email', true);
 
   $location_terms = get_the_terms(get_the_ID(), 'job_location');
-  $location = !empty($location_terms) ? $location_terms[0]->name : '';
+  $location = '';
+  if (!empty($location_terms) && !is_wp_error($location_terms)) {
+    $location = implode('; ', wp_list_pluck($location_terms, 'name'));
+  }
 
   $type_terms = get_the_terms(get_the_ID(), 'job_type');
   $type = !empty($type_terms) ? $type_terms[0]->name : '';
@@ -20,7 +23,7 @@ while (have_posts()):
 ?>
 
 <div class="site-content" style="padding-top: 80px; padding-bottom: 80px; background-color: #f9f9f9;">
-  <div class="container" style="max-width: 1000px; margin: 0 auto; padding: 0 20px;">
+  <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
     
     <div class="job-header-card" style="background: white; border-radius: 16px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px;">
         <div class="job-breadcrumb" style="margin-bottom: 20px; font-size: 14px; color: #888;">

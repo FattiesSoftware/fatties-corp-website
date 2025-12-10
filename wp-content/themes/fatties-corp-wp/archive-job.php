@@ -21,7 +21,10 @@ get_header();
           the_post();
           $salary = get_post_meta(get_the_ID(), '_job_salary', true);
           $location_terms = get_the_terms(get_the_ID(), 'job_location');
-          $location = !empty($location_terms) ? $location_terms[0]->name : '';
+          $location = '';
+          if (!empty($location_terms) && !is_wp_error($location_terms)) {
+            $location = implode(', ', wp_list_pluck($location_terms, 'name'));
+          }
           $type_terms = get_the_terms(get_the_ID(), 'job_type');
           $type = !empty($type_terms) ? $type_terms[0]->name : '';
           ?>
