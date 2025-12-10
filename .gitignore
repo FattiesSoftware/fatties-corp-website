@@ -80,4 +80,4 @@ build/
 wp-content/.DS_Store
 /wp-content/uploads/wpforms/cache
 /wp-content/uploads
-/wp-content
+wp-content/*
