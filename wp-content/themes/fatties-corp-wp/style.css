@@ -19,6 +19,7 @@ body {
   height: 100%;
   width: 100%;
   margin: 0;
+  overflow-x: clip;
 }
 
 * {
@@ -177,6 +178,7 @@ body {
 .section-container {
   padding: 40px 0;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 #section-hero {
@@ -1682,6 +1684,7 @@ img.vision-img {
   color: #1f2330;
   border-top: 1px solid #eceff5;
   border-bottom: 1px solid #eceff5;
+  overflow: hidden;
 }
 
 .contact-cta-inner {
