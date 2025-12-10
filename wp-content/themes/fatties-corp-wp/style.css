@@ -1096,6 +1096,7 @@ img.vision-img {
   margin-left: 10px;
   box-shadow: 0 4px 15px rgba(241, 9, 146, 0.3);
   transition: all 0.3s ease;
+  text-decoration: none;
 }
 
 .nav-cta::before {

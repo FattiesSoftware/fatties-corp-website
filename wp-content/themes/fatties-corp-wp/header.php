@@ -69,6 +69,7 @@
           class="nav-link">Đánh giá</a>
         <a href="<?php echo $is_front_page ? '#section-team' : $home_url . '#section-team'; ?>" class="nav-link">Đội
           ngũ</a>
+        <a href="<?php echo home_url('/careers'); ?>" class="nav-link">Tuyển dụng</a>
         <a href="<?php echo esc_url($blog_url); ?>" class="nav-link">Blog</a>
         <a href="<?php echo esc_url($contact_url); ?>" class="nav-link nav-cta">Liên hệ</a>
       </div>

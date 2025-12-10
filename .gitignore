@@ -79,3 +79,4 @@ build/
 **/.DS_Store
 wp-content/.DS_Store
 /wp-content/uploads/wpforms/cache
+/wp-content/uploads

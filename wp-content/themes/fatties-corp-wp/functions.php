@@ -889,3 +889,157 @@ function fatties_corp_login_logo_url_title()
 }
 
 add_filter('login_headertext', 'fatties_corp_login_logo_url_title');
+
+// ==========================================
+// RECRUITMENT SYSTEM (TUYỂN DỤNG)
+// ==========================================
+
+// 1. Register Job Post Type
+function fatties_corp_register_job_cpt()
+{
+  register_post_type('job', array(
+    'labels' => array(
+      'name' => __('Tuyển dụng', 'fatties-corp'),
+      'singular_name' => __('Công việc', 'fatties-corp'),
+      'add_new' => __('Thêm tin tuyển dụng', 'fatties-corp'),
+      'add_new_item' => __('Thêm tin tuyển dụng mới', 'fatties-corp'),
+      'edit_item' => __('Sửa tin tuyển dụng', 'fatties-corp'),
+      'new_item' => __('Tin tuyển dụng mới', 'fatties-corp'),
+      'view_item' => __('Xem tin tuyển dụng', 'fatties-corp'),
+      'search_items' => __('Tìm kiếm tin tuyển dụng', 'fatties-corp'),
+      'not_found' => __('Không tìm thấy tin tuyển dụng', 'fatties-corp'),
+      'not_found_in_trash' => __('Không tìm thấy trong thùng rác', 'fatties-corp'),
+    ),
+    'public' => true,
+    'has_archive' => true,
+    'menu_icon' => 'dashicons-id',
+    'supports' => array('title', 'editor', 'thumbnail', 'excerpt'),
+    'rewrite' => array('slug' => 'careers'),
+    'show_in_rest' => true,  // Enable Gutenberg editor
+  ));
+}
+
+add_action('init', 'fatties_corp_register_job_cpt');
+
+// 2. Register Job Taxonomies
+function fatties_corp_register_job_taxonomies()
+{
+  // Job Type (Full-time, Part-time, etc.)
+  register_taxonomy('job_type', 'job', array(
+    'labels' => array(
+      'name' => __('Loại công việc', 'fatties-corp'),
+      'singular_name' => __('Loại công việc', 'fatties-corp'),
+      'add_new_item' => __('Thêm loại công việc', 'fatties-corp'),
+      'new_item_name' => __('Tên loại công việc mới', 'fatties-corp'),
+    ),
+    'hierarchical' => true,
+    'show_admin_column' => true,
+    'show_in_rest' => true,
+    'rewrite' => array('slug' => 'job-type'),
+  ));
+
+  // Job Department (Engineering, Design, Marketing, etc.)
+  register_taxonomy('job_department', 'job', array(
+    'labels' => array(
+      'name' => __('Phòng ban', 'fatties-corp'),
+      'singular_name' => __('Phòng ban', 'fatties-corp'),
+      'add_new_item' => __('Thêm phòng ban', 'fatties-corp'),
+      'new_item_name' => __('Tên phòng ban mới', 'fatties-corp'),
+    ),
+    'hierarchical' => true,
+    'show_admin_column' => true,
+    'show_in_rest' => true,
+    'rewrite' => array('slug' => 'job-department'),
+  ));
+
+  // Job Location
+  register_taxonomy('job_location', 'job', array(
+    'labels' => array(
+      'name' => __('Địa điểm làm việc', 'fatties-corp'),
+      'singular_name' => __('Địa điểm', 'fatties-corp'),
+      'add_new_item' => __('Thêm địa điểm', 'fatties-corp'),
+      'new_item_name' => __('Tên địa điểm mới', 'fatties-corp'),
+    ),
+    'hierarchical' => true,
+    'show_admin_column' => true,
+    'show_in_rest' => true,
+    'rewrite' => array('slug' => 'job-location'),
+  ));
+}
+
+add_action('init', 'fatties_corp_register_job_taxonomies');
+
+// 3. Register Job Meta Boxes
+function fatties_corp_add_job_meta_boxes()
+{
+  add_meta_box(
+    'job_details',
+    __('Thông tin tuyển dụng', 'fatties-corp'),
+    'fatties_corp_job_meta_box_callback',
+    'job',
+    'normal',
+    'high'
+  );
+}
+
+add_action('add_meta_boxes', 'fatties_corp_add_job_meta_boxes');
+
+function fatties_corp_job_meta_box_callback($post)
+{
+  wp_nonce_field('fatties_corp_job_meta_box', 'fatties_corp_job_meta_box_nonce');
+
+  $salary = get_post_meta($post->ID, '_job_salary', true);
+  $deadline = get_post_meta($post->ID, '_job_deadline', true);
+  $experience = get_post_meta($post->ID, '_job_experience', true);
+  $apply_email = get_post_meta($post->ID, '_job_apply_email', true);
+  ?>
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+    <p style="width: 48%;">
+      <label for="job_salary"><strong><?php _e('Mức lương:', 'fatties-corp'); ?></strong></label><br>
+      <input type="text" id="job_salary" name="job_salary" value="<?php echo esc_attr($salary); ?>" style="width: 100%;" placeholder="VD: 15.000.000 - 20.000.000 VNĐ hoặc Thỏa thuận">
+    </p>
+
+    <p style="width: 48%;">
+      <label for="job_deadline"><strong><?php _e('Hạn nộp hồ sơ:', 'fatties-corp'); ?></strong></label><br>
+      <input type="date" id="job_deadline" name="job_deadline" value="<?php echo esc_attr($deadline); ?>" style="width: 100%;">
+    </p>
+
+    <p style="width: 48%;">
+      <label for="job_experience"><strong><?php _e('Yêu cầu kinh nghiệm:', 'fatties-corp'); ?></strong></label><br>
+      <input type="text" id="job_experience" name="job_experience" value="<?php echo esc_attr($experience); ?>" style="width: 100%;" placeholder="VD: 1 năm, 2 năm...">
+    </p>
+
+    <p style="width: 48%;">
+      <label for="job_apply_email"><strong><?php _e('Email nhận CV:', 'fatties-corp'); ?></strong></label><br>
+      <input type="email" id="job_apply_email" name="job_apply_email" value="<?php echo esc_attr($apply_email); ?>" style="width: 100%;" placeholder="hr@fatties.vn">
+    </p>
+  </div>
+  <?php
+}
+
+function fatties_corp_save_job_meta_box($post_id)
+{
+  if (!isset($_POST['fatties_corp_job_meta_box_nonce']) ||
+      !wp_verify_nonce($_POST['fatties_corp_job_meta_box_nonce'], 'fatties_corp_job_meta_box')) {
+    return;
+  }
+
+  if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+    return;
+  }
+
+  if (isset($_POST['job_salary'])) {
+    update_post_meta($post_id, '_job_salary', sanitize_text_field($_POST['job_salary']));
+  }
+  if (isset($_POST['job_deadline'])) {
+    update_post_meta($post_id, '_job_deadline', sanitize_text_field($_POST['job_deadline']));
+  }
+  if (isset($_POST['job_experience'])) {
+    update_post_meta($post_id, '_job_experience', sanitize_text_field($_POST['job_experience']));
+  }
+  if (isset($_POST['job_apply_email'])) {
+    update_post_meta($post_id, '_job_apply_email', sanitize_email($_POST['job_apply_email']));
+  }
+}
+
+add_action('save_post', 'fatties_corp_save_job_meta_box');

@@ -9,7 +9,7 @@
 get_header();
 ?>
 
-<div class="site-content" style="padding: 75px 25px; min-height: 100vh; background-color: #f5f5f5;">
+<div class="site-content" style="padding: 100px 25px; min-height: 100vh; background-color: #f5f5f5;">
   <div class="container" style="max-width: 1400px; margin: 0 auto;">
 
     <header class="page-header" style="text-align: center; margin-bottom: 60px;">
