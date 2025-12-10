@@ -187,7 +187,7 @@ get_header();
     background: white;
     border-radius: 15px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-    width: 1100px;
+    max-width: 1100px;
     margin: 0 auto;
   }
 
