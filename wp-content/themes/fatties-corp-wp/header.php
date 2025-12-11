@@ -7,6 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="rgba(241, 9, 146, 1)">
 
+  <!-- Website Thumbnail -->
+  <meta property="og:image" content="<?php echo get_template_directory_uri(); ?>/assets/images/web-thumbnail.png">
+  <meta name="twitter:image" content="<?php echo get_template_directory_uri(); ?>/assets/images/web-thumbnail.png">
+  <link rel="image_src" href="<?php echo get_template_directory_uri(); ?>/assets/images/web-thumbnail.png">
+
   <?php wp_head(); ?>
 </head>
 
