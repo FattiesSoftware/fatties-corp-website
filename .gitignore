@@ -77,8 +77,12 @@ build/
 # ===========================
 # Ignore system-wide .DS_Store recursively
 **/.DS_Store
-# Bỏ qua thư mục wp-content
-wp-content/
+# Ignore wp-content contents, but not the directory itself so we can un-ignore subdirectories
+wp-content/*
+!wp-content/themes/
 
-# Cho phép thư mục theme
+# Ignore all themes by default
+wp-content/themes/*
+
+# Un-ignore our specific theme
 !wp-content/themes/fatties-corp-wp/
